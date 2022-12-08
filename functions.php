@@ -68,13 +68,13 @@ function get_posts_via_sql() {
 
     $pre = $wpdb -> prefix;
     //difine sql query string that will use join to merge results
-    $query = "SELECT" .$pre . "post.ID, ";
-    $query .= $pre . "posts.posts_title, ";
+    $query = "SELECT " .$pre . "posts.ID, ";
+    $query .= $pre . "posts.post_title, ";
     $query .= $pre . "posts.post_content, ";
     $query .= $pre ."users.user_login ";
     $query .= "FROM " . $pre . "posts ";
     $query .= "INNER JOIN " . $pre . "users ";
-    $query .= "ON " .$pre . "posts.post_author = " .$pre . "user.ID ";
+    $query .= "ON " .$pre . "posts.post_author = " . $pre . "users.ID ";
     $query .= "WHERE " .$pre . "posts.post_status = 'publish';";
 
 
