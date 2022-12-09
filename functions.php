@@ -49,6 +49,40 @@ function custom_post_types() {
 }
 add_action('init', 'custom_post_types');
 
+// new custom post types
+function custom_post_types2() {
+   register_post_type(
+    'User_Emails',
+    array(
+        'labels' => array (
+            'name' => __('User_Emails', 'textdomain'),
+            'singular_name' => __('User_Emails', 'textdomain')
+        ),
+        'public' => true,
+        'has_archive' => true
+    )
+   ); 
+}
+add_action('init', 'custom_post_types2');
+
+
+// new custom post types
+function custom_post_types3() {
+   register_post_type(
+    'User_Numbers',
+    array(
+        'labels' => array (
+            'name' => __('User_Numbers', 'textdomain'),
+            'singular_name' => __('User_Numbers', 'textdomain')
+        ),
+        'public' => true,
+        'has_archive' => true
+    )
+   ); 
+}
+add_action('init', 'custom_post_types3');
+
+
 //tell wp api to reg a new REST url endpoint
 
 add_action('rest_api_init', 'register_my_route2');
@@ -68,6 +102,7 @@ function get_posts_via_sql() {
 
     $pre = $wpdb -> prefix;
     //difine sql query string that will use join to merge results
+    
     $query = "SELECT " .$pre . "posts.ID, ";
     $query .= $pre . "posts.post_title, ";
     $query .= $pre . "posts.post_content, ";
@@ -76,6 +111,21 @@ function get_posts_via_sql() {
     $query .= "INNER JOIN " . $pre . "users ";
     $query .= "ON " .$pre . "posts.post_author = " . $pre . "users.ID ";
     $query .= "WHERE " .$pre . "posts.post_status = 'publish';";
+	$query .= "AND " .$pre . "posts.post_type = 'post';";
+   
+   /* $query  = "SELECT wp_posts.ID, ";
+    $query .= "GROUP_CONCAT( wp_postmeta.meta_key, ':', REPLACE(REPLACE(wp_postmeta.meta_value,',',''),':','') )AS acf_fields ";
+    $query .= "FROM wp_posts ";
+    $query .= "INNER JOIN wp_postmeta ";
+    $query .= "ON wp_posts.ID = wp_postmeta.post_id ";
+    $query .= "WHERE wp_posts.post_status = 'publish' ";
+    $query .= "AND wp_posts.post_type = 'post' ";
+    $query .= "AND wp_postmeta.meta_key NOT LIKE '\_%' ";
+    $query .= "GROUP BY wp_posts.ID";
+	*/
+
+    
+
 
 
     $results = $wpdb -> get_results($query);

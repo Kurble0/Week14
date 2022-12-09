@@ -8,7 +8,8 @@ export async function getStaticProps({ params }) {
   return {
     props: {
       itemData
-    }
+    },
+    revalidate: 60
   };
 }
 

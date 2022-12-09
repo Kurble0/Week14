@@ -8,8 +8,9 @@ export async function getStaticProps() {
   return {
     props: {
       allData
-    }
-  }
+    },
+    revalidate: 60
+  };
 }
 export default function Home({ allData }) {
   return (
